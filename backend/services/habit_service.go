@@ -53,3 +53,25 @@ func DeleteHabit(id uint, userId uint) error {
 
 	return result.Error
 }
+
+func CheckInHabit(habitId uint) (*models.Habit, error) {
+	var habit models.Habit
+	err := database.DB.First(&habit, habitId).Error
+	if err != nil {
+		return nil, errors.New("habit not found")
+	}
+
+	checkin := models.HabitCheckIn{
+		HabitID:     habitId,
+		CheckInDate: time.Now(),
+	}
+	database.DB.Create(&checkin)
+
+	habit.CurrentStreak += 1
+	if habit.CurrentStreak > habit.LongestStreak {
+		habit.LongestStreak = habit.CurrentStreak
+	}
+	database.DB.Save(&habit)
+
+	return &habit, nil
+}

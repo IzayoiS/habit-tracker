@@ -23,4 +23,5 @@ func SetupRoutes(app *fiber.App) {
 	habits.Get("/:id", controller.GetHabitById)
 	habits.Patch("/:id",controller.UpdateHabit)
 	habits.Delete("/:id",controller.DeleteHabit)
+	habits.Post("/:id/checkin", controller.CheckInHabit)
 }

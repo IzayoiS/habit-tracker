@@ -124,3 +124,19 @@ func DeleteHabit(c *fiber.Ctx) error {
 		"message": "Habit deleted successfully",
 	})
 }
+
+func CheckInHabit(c *fiber.Ctx) error {
+	id, _ := strconv.Atoi(c.Params("id"))
+	habit, err := service.CheckInHabit(uint(id))
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"status": "error",
+			"message": err.Error(),
+		})
+	}
+	return c.JSON(fiber.Map{
+		"status":         "success",
+		"message":       "Checked in successfully",
+		"current_streak": habit.CurrentStreak,
+	})
+}
