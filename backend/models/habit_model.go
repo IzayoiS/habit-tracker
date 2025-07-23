@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Habit struct {
-	ID            uint      `gorm:"primaryKey"`
+	ID            uint      `gorm:"primaryKey" json:"id"`
 	UserID        uint      `json:"user_id"`             
 	Name          string    `json:"name"`                
 	Description   string    `json:"description"`
