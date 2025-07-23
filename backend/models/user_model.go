@@ -8,6 +8,8 @@ type User struct {
 	Password string `json:"-"`
 	Email    string `gorm:"unique"`
 
+	Habits []Habit `json:"habits,omitempty"`
+
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

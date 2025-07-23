@@ -11,6 +11,8 @@ type Habit struct {
 	CurrentStreak int       `json:"current_streak"`
 	LongestStreak int       `json:"longest_streak"`
 
+	User		  User      `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

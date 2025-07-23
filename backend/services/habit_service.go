@@ -16,26 +16,32 @@ func CreateHabit(userId uint, name, description string, startDate time.Time) (*m
 		CurrentStreak: 0,
 		LongestStreak: 0,
 	}
+	
 	err := database.DB.Create(habit).Error
+    if err != nil {
+        return nil, err
+    }
+	
+	err = database.DB.Preload("User").First(habit, habit.ID).Error
 	return habit, err
 }
 
 func GetHabits(userId uint) ([]models.Habit, error) {
 	var habits []models.Habit
-	err := database.DB.Where("user_id = ?", userId).Find(&habits).Error
+	err := database.DB.Preload("User").Where("user_id = ?", userId).Find(&habits).Error
 	return habits, err
 }
 
 func GetHabitById(id uint, userId uint) (*models.Habit, error) {
 	var habit models.Habit
-	err := database.DB.Where("id = ? AND user_id = ?", id, userId).First(&habit).Error
+	err := database.DB.Preload("User").Where("id = ? AND user_id = ?", id, userId).First(&habit).Error
 	if err != nil {
 		return nil, errors.New("Habit not found or does not belong to user")
 	}
 	return &habit, nil
 }
 
-func UpdateHabitNameDesc(id uint, name, description string, userId uint) error {
+func UpdateHabit(id uint, name, description string, userId uint) error {
 	result := database.DB.Model(&models.Habit{}).Where("id = ? AND user_id = ?", id, userId).Updates(
 		map[string]interface{}{"name": name, "description": description})
 	if result.RowsAffected == 0 {

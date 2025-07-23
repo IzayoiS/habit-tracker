@@ -89,7 +89,8 @@ func UpdateHabit(c *fiber.Ctx) error {
 	c.BodyParser(&data)
 	userId := c.Locals("userId").(uint)
 
-	err := service.UpdateHabitNameDesc(uint(id), data["name"], data["description"], userId)
+	habit, err := service.GetHabitById(uint(id), userId)
+	err = service.UpdateHabit(uint(id), data["name"], data["description"], userId)
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
 			"status": "error",
@@ -99,6 +100,7 @@ func UpdateHabit(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"status":  "success",	
 		"message": "Habit updated successfully",
+		"data":    habit,
 	})
 }
 
