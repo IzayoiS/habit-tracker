@@ -45,7 +45,7 @@ export default function HabitsPage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="hover:bg-gray-100"
+                    className="hover:bg-gray-100 cursor-pointer"
                   >
                     <Edit2 size={16} className="text-gray-500" />
                   </Button>
@@ -61,7 +61,7 @@ export default function HabitsPage() {
                       variant="ghost"
                       size="icon"
                       onClick={() => setOpenDialogId(habit.id)}
-                      className="hover:bg-red-50"
+                      className="hover:bg-red-50 cursor-pointer"
                     >
                       <Trash2 size={16} className="text-red-500" />
                     </Button>
@@ -74,6 +74,7 @@ export default function HabitsPage() {
                       <Button
                         variant="ghost"
                         onClick={() => setOpenDialogId(null)}
+                        className="cursor-pointer"
                       >
                         Cancel
                       </Button>
@@ -83,6 +84,7 @@ export default function HabitsPage() {
                           deleteHabit.mutate(habit.id);
                           setOpenDialogId(null);
                         }}
+                        className="cursor-pointer"
                       >
                         Delete
                       </Button>
