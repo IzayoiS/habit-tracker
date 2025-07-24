@@ -46,11 +46,13 @@ export const useUpdateHabit = () => {
       id: number;
       data: { name?: string; description?: string };
     }) => {
-      await api.put(`/habits/${id}`, data, {
+      const res = await api.patch(`/habits/${id}`, data, {
         headers: { Authorization: getToken() },
       });
+      return res.data;
     },
-    onSuccess: () => {
+    onSuccess: (res) => {
+      toast(res.message);
       queryClient.invalidateQueries({ queryKey: ["habits"] });
     },
   });

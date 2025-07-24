@@ -25,10 +25,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { SpinnerCircularFixed } from "spinners-react";
 import { useAddHabit } from "../hooks/use-habit";
+import { useRouter } from "next/navigation";
 
 export default function CreateHabitPage() {
   const [openCalendar, setOpenCalendar] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const router = useRouter();
 
   const form = useForm<FormHabitSchemaDTO>({
     resolver: zodResolver(formHabitSchema),
@@ -46,6 +48,7 @@ export default function CreateHabitPage() {
       onSuccess: () => {
         form.reset();
         setDate(undefined);
+        router.push("/habits");
       },
     });
   };

@@ -152,7 +152,11 @@ export default function EditHabitPage() {
             )}
           />
 
-          <Button type="submit" disabled={isPending} className="w-full">
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="w-full cursor-pointer"
+          >
             {isPending ? "Updating..." : "Update Habit"}
           </Button>
         </form>
