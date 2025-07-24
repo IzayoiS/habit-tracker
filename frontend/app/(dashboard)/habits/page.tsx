@@ -1,19 +1,18 @@
 "use client";
 
-import React from "react";
-import { useHabits, useDeleteHabit, useCheckInHabit } from "./hooks/use-habit";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Loader2, Plus, Trash2, Edit2 } from "lucide-react";
-import Link from "next/link";
 import { Habit } from "@/app/(dashboard)/habits/types/habit";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogTrigger,
   DialogFooter,
+  DialogTrigger,
 } from "@/components/ui/dialog";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { Check, Edit2, Loader2, Plus, Trash2 } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { useCheckInHabit, useDeleteHabit, useHabits } from "./hooks/use-habit";
 
 export default function HabitsPage() {
   const { data: habits, isLoading } = useHabits();
@@ -30,35 +29,25 @@ export default function HabitsPage() {
     );
   } else if (habits && habits.length > 0) {
     content = (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {habits.map((habit: Habit) => (
           <div
             key={habit.id}
-            className="bg-white rounded-xl shadow-md p-6 flex flex-col gap-4 border border-gray-100"
+            className="flex flex-col gap-3 bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md transition"
           >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Checkbox
-                  checked={habit.checkedInToday}
-                  onCheckedChange={() => checkInHabit.mutate(habit.id)}
-                />
-                <div>
-                  <div className="font-semibold text-lg text-gray-800">
-                    {habit.name}
-                  </div>
-                  <div className="text-gray-500 text-sm">
-                    {habit.description}
-                  </div>
-                </div>
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-semibold text-gray-800">{habit.name}</h3>
+                <p className="text-xs text-gray-500">{habit.description}</p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <Link href={`/habits/edit/${habit.id}`}>
                   <Button
-                    size="icon"
                     variant="ghost"
-                    className="cursor-pointer"
+                    size="icon"
+                    className="hover:bg-gray-100"
                   >
-                    <Edit2 className="w-4 h-4" />
+                    <Edit2 size={16} className="text-gray-500" />
                   </Button>
                 </Link>
                 <Dialog
@@ -69,29 +58,27 @@ export default function HabitsPage() {
                 >
                   <DialogTrigger asChild>
                     <Button
+                      variant="ghost"
                       size="icon"
-                      variant="destructive"
-                      className="cursor-pointer"
                       onClick={() => setOpenDialogId(habit.id)}
+                      className="hover:bg-red-50"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 size={16} className="text-red-500" />
                     </Button>
                   </DialogTrigger>
                   <DialogContent>
-                    <div className="mb-4">
+                    <p className="mb-4">
                       Are you sure you want to delete this habit?
-                    </div>
+                    </p>
                     <DialogFooter>
                       <Button
                         variant="ghost"
-                        className="cursor-pointer"
                         onClick={() => setOpenDialogId(null)}
                       >
                         Cancel
                       </Button>
                       <Button
                         variant="destructive"
-                        className="cursor-pointer"
                         onClick={() => {
                           deleteHabit.mutate(habit.id);
                           setOpenDialogId(null);
@@ -104,8 +91,28 @@ export default function HabitsPage() {
                 </Dialog>
               </div>
             </div>
-            <div className="text-xs text-gray-400 mt-2">
-              Streak: {habit.current_streak ?? 0}
+            <div className="flex justify-between items-center mt-2">
+              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+                🔥 Streak: {habit.current_streak ?? 0}
+              </span>
+              {habit.checkedInToday ? (
+                <Button
+                  size="sm"
+                  disabled
+                  className="gap-1 bg-green-500 text-white hover:bg-green-600 cursor-not-allowed"
+                >
+                  <Check size={14} /> Checked in
+                </Button>
+              ) : (
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => checkInHabit.mutate(habit.id)}
+                  className="gap-1 cursor-pointer"
+                >
+                  <Check size={14} /> Check in
+                </Button>
+              )}
             </div>
           </div>
         ))}
@@ -127,7 +134,7 @@ export default function HabitsPage() {
           My Habits
         </h1>
         <Link href="/habits/create">
-          <Button className="gap-2 cursor-pointer" size="lg">
+          <Button className="gap-2" size="lg">
             <Plus className="w-5 h-5" /> Add Habit
           </Button>
         </Link>
