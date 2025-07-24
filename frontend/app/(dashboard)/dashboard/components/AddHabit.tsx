@@ -63,9 +63,9 @@ export default function AddHabitModal() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="fixed bottom-8 right-8 bg-orange-500 text-white rounded-full w-14 h-14 text-2xl shadow hover:bg-orange-600 active:bg-orange-700">
+        <Button className="fixed bottom-8 cursor-pointer right-8 bg-orange-500 text-white rounded-full w-14 h-14 text-2xl shadow hover:bg-orange-600 active:bg-orange-700">
           +
-        </button>
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -143,7 +143,11 @@ export default function AddHabitModal() {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={isPending} className="w-full">
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="w-full cursor-pointer"
+            >
               {isPending ? (
                 <SpinnerCircularFixed
                   size={20}
