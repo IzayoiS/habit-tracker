@@ -5,4 +5,5 @@ export interface Habit {
   start_date: string;
   current_streak: number;
   longest_streak: number;
+  checkedInToday: boolean;
 }

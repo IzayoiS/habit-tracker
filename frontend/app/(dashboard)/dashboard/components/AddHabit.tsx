@@ -23,7 +23,7 @@ import {
   formHabitSchema,
   FormHabitSchemaDTO,
 } from "@/utils/schemas/habit.schema";
-import { useAddHabit } from "../hooks/use-habit";
+import { useAddHabit } from "../../habits/hooks/use-habit";
 import { SpinnerCircularFixed } from "spinners-react";
 import { useState } from "react";
 import {
@@ -130,9 +130,8 @@ export default function AddHabitModal() {
                             setDate(selectedDate);
                             setOpenCalendar(false);
                             if (selectedDate) {
-                              const iso = selectedDate
-                                .toISOString()
-                                .split("T")[0];
+                              const iso =
+                                selectedDate.toLocaleDateString("sv-SE");
                               field.onChange(iso);
                             }
                           }}

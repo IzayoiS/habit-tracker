@@ -1,4 +1,4 @@
-import { useHabits } from "../hooks/use-habit";
+import { useHabits } from "../../habits/hooks/use-habit";
 
 export default function ProgressCard() {
   const { data: habits = [] } = useHabits();

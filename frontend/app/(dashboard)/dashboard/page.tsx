@@ -1,5 +1,6 @@
 "use client";
 
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import AddHabitModal from "./components/AddHabit";
 import CurrentStreakCard from "./components/CurrentStreakCard";
 import HabitCard from "./components/HabitCard";
@@ -8,7 +9,8 @@ import ProgressCard from "./components/ProgressCard";
 
 export default function Dashboard() {
   return (
-    <div className="p-4 max-w-md mx-auto space-y-4">
+    <div className="flex-1 min-w-0 p-4 w-full space-y-4">
+      <SidebarTrigger />
       <Header />
       <ProgressCard />
       <CurrentStreakCard />
